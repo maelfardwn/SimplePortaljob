@@ -1,12 +1,17 @@
 .App {
   text-align: center;
+  background: #7c795d;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
+@media screen and (max-width:800px) {
+  .left, .main, .right {
+    width:100%; /* The width is 100%, when the viewport is 800px or smaller */
+  }
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -35,4 +40,73 @@
   to {
     transform: rotate(360deg);
   }
+}
+.header{
+  position: sticky;
+  width: 100%;
+  height: 100px;
+  padding-top: 8px;
+  background-color: #54426B;
+  text-align: center;
+}
+h1 { color: #7c795d; font-family: 'Trocchi', serif;
+     font-size: 30px; font-weight: normal;
+    line-height: 35px; margin: 0; }
+.input{background-color: #76677D;
+  padding-right: 13px;
+}
+h2 { color: #7c795d; font-family: 'Source Sans Pro', sans-serif;
+       font-size: 15px; font-weight: 400; line-height: 10px; margin: 0 0 24px; }
+.side{
+  float: right;
+  position: relative;
+  background-color:#988C8F;
+  height: 100%;
+  text-align: center;
+}
+.side ul{
+ 
+  list-style-type: none;
+}
+.container{
+  
+  background-color: #BAB1A1;
+  float: right;
+  padding-bottom: 20px;
+}
+.footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(39, 31, 31);
+  color: white;padding-top: 15px;
+  text-align: center;
+}
+.input-container{
+	position: absolute;;
+	margin-bottom:100px;
+}
+.input-container label{
+	position:absolute;
+	top:0px;
+	left:0px;
+	font-size:16px;
+	color:#fff;	
+    pointer-event:none;
+	transition: all 0.5s ease-in-out;
+}
+.input-container input{ 
+  border:0;
+  border-bottom:1px solid #555;  
+  background:transparent;
+  width:100%;
+  padding:8px 0 5px 0;
+  font-size:16px;
+  color:#fff;
+}
+.input-container input:focus{ 
+ border:none;	
+ outline:none;
+ border-bottom:1px solid #e74c3c;	
 }
