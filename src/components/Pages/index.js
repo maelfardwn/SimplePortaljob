@@ -4,9 +4,11 @@ import GridPaper from '../../container/Paper/paper';
 import InputBox from '../Search';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import useFullPageLoader from '../../hooks/useFullPageLoader'
 
 const Home = () =>{
     
+    const [loader, showLoader, hideLoader] = useFullPageLoader()
     const [data, setData] = useState([{}])
     const [comments, setComments] = useState([])
     const [search, setSearch] = useState("")
@@ -14,13 +16,16 @@ const Home = () =>{
         checkedB: false,
         checkedF: false,
       });
+    
    
 
     useEffect(()=> {
         const getData = () => {
+            showLoader();
             fetch('https://remotive.io/api/remote-jobs?limit=20')
             .then(res => res.json())
             .then(json => {
+                hideLoader()
                 setData(json.jobs)
                 setComments(json)
                 console.log(json.jobs)
@@ -60,6 +65,7 @@ const Home = () =>{
       };
     
     return(
+        <>
         <div className='App' >
             <div className="header">
             <h1>Maelfa's Portal</h1>
@@ -99,9 +105,10 @@ const Home = () =>{
            </div>
            
         <div className="container">
-           
-                    {showedData.map( data=> (
-                        <GridPaper 
+       
+    {loader}
+                    {showedData.map( (data,index)=> (
+                        <GridPaper key={index}
                         title={data.title}
                         desc={data.job_type +', '+ data.publication_date}
                         cat={data.category}
@@ -113,6 +120,7 @@ const Home = () =>{
          <h2> <b>Created by Ridwan Maelfa</b></h2>
          </div>
     </div>
+    </>
     )
 
 }
