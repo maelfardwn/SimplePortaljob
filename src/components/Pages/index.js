@@ -5,6 +5,11 @@ import InputBox from '../Search';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import useFullPageLoader from '../../hooks/useFullPageLoader'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+import parse from 'html-react-parser';
 
 const Home = () =>{
     
@@ -63,21 +68,47 @@ const Home = () =>{
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
       };
-    
+      
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      
+      backgroundColor: 'lightblue',
+      padding: theme.spacing(2),
+      margin: 0,
+      textAlign: 'center',
+      color: theme.palette.text.primary,
+    },
+  }));
+  const classes = useStyles();
+  
+  const parse = require('html-react-parser');
     return(
-        <>
-        <div className='App' >
-            <div className="header">
-            <h1>Maelfa's Portal</h1>
-            <h2> For Job Seekers</h2>
-            </div>
-            <div className='side'>
-            <ul>
-                    <li>
+        <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+          <h1>Maelfa's Portal</h1>
+        <h2> For Job Seekers</h2>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <Paper className={classes.paper}>
+            <Grid container
+  direction="column"
+  justify="flex-start"alignItems="center"
+
+
+>
+            <Grid item xs={18} sm={6}>
             <InputBox onSearch={value => 
-                        setSearch(value)}/>  </li>
-                    <li><b>JOB TYPE</b></li>
-                    <li> <FormControlLabel
+                        setSearch(value)}/> 
+            </Grid>
+            <Grid item xs={18} sm={6}>
+                    <b>JOB TYPE</b><br/>
+                    <FormControlLabel
                     control={
                       <Checkbox
                         checked={state.checkedB}
@@ -88,8 +119,9 @@ const Home = () =>{
                            }
                     label="Full Time"
                           />
-                    </li>
-                    <li> <FormControlLabel
+            </Grid>
+            <Grid  item xs={18} sm={6}>
+                    <FormControlLabel
                     control={
                       <Checkbox
                         checked={state.checkedF}
@@ -100,27 +132,29 @@ const Home = () =>{
                            }
                     label="Part Time"
                           />
-                    </li>
-            </ul>
-           </div>
-           
-        <div className="container">
-       
-    {loader}
+            </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={9}>
+          <Paper className={classes.paper}>
+
+                    {loader}
                     {showedData.map( (data,index)=> (
                         <GridPaper key={index}
                         title={data.title}
                         desc={data.job_type +', '+ data.publication_date}
                         cat={data.category}
+                        des={parse(`${data.description}`)}
                         />
                     ))}
         
-         </div> 
-         <div className="footer">
-         <h2> <b>Created by Ridwan Maelfa</b></h2>
+          </Paper>
+        </Grid>
+            </Grid>
          </div>
-    </div>
-    </>
+    
+  
     )
 
 }

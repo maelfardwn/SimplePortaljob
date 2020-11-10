@@ -4,31 +4,71 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 
 const GridPaper = (props) => {
     const useStyles = makeStyles((theme) => ({
         root:{
-            flexgrow:1,
-            marginRight:20,
-            bottom:100
+          display: 'flex',
+        flexWrap: 'wrap',
+        '& > *': {
+          margin: theme.spacing(1),
+          width: theme.spacing(16),
+          height: theme.spacing(16),
         },
-        paper:{
-            padding: theme.spacing(2),
-            margin: 20,
-            width: 1000,
-        }, image: {
-            width: 128,
-            height: 128,
-          },
-          img: {
+        },
+        paper:{ textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              display: 'block',
+              whiteSpace: 'nowrap',
+               padding: theme.spacing(2),
+                  margin:'auto',
+               width: "100%",
+        },
+        image: {width: '100%',
+          maxWidth: 100,
+          height: 'auto'
+        },
+        img: { overflow: 'ellipsis',
             margin: 'auto',
             display: 'block',
             maxWidth: '100%',
             maxHeight: '100%',
           },
-        }));
-        const classes = useStyles();
+         modal: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+        paperM: {marginTop: 100,
+          marginBottom: 100,
+          paddingTop: 50,
+            display: 'block',
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+            width: '100%',
+          maxWidth: 600,
+          height: '100%',
+          overflow:'scroll',
 
+          },
+        }));
+      
+        const [open, setOpen] = React.useState(false);
+
+        const handleOpen = () => {
+         setOpen(true);
+       };
+
+        const handleClose = () => {
+          setOpen(false);
+       };
+        const classes = useStyles();
     return(<div className={classes.root}>
         <Paper className={classes.paper}>
         <Grid container spacing={2}>
@@ -49,9 +89,28 @@ const GridPaper = (props) => {
                 
               </Grid>
               <Grid item>
-                <Typography variant="body2" color="primary" style={{ cursor: 'pointer' }}>
-                 Details
-                </Typography>
+              <Button onClick={handleOpen} variant="outlined" size="small" color="primary" >
+                    Details
+              </Button>
+                <Modal
+                      aria-labelledby="transition-modal-title"
+                      aria-describedby="transition-modal-description"
+                      className={classes.modal}
+                      open={open}
+                      onClose={handleClose}
+                      closeAfterTransition
+                      BackdropComponent={Backdrop}
+                      BackdropProps={{
+                        timeout: 500,
+                      }}
+                  >                 
+                  <Fade in={open}>
+                    <div className={classes.paperM}>
+                    <h2 id="transition-modal-title"><center><h3><u><b>{props.title}</b></u></h3></center></h2>
+                    <p id="transition-modal-description">{props.des}</p>
+                    </div>
+                  </Fade>
+                </Modal>
               </Grid>
             </Grid>
             <Grid item>
